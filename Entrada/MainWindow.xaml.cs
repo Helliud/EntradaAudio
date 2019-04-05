@@ -50,7 +50,34 @@ namespace Entrada
             waveIn.WaveFormat = new WaveFormat(44100, 16, 1);
             //Buffer
             waveIn.BufferMilliseconds = 250;
-            //
+            //¿Que hacer cuando hay muestras disponibles?
+            waveIn.DataAvailable += WaveIn_DataAvailable;
+
+            waveIn.StartRecording();
+        }
+
+        private void WaveIn_DataAvailable(object sender, WaveInEventArgs e)
+        {
+            byte[] buffer = e.Buffer;
+            float acumulador = 0.0f;
+            int bytesGrabados = e.BytesRecorded;
+
+            for (int i = 0; i < bytesGrabados; i += 2)
+            {
+                //Transformando 2 bytes separados en una muestra de 16 bits
+                //1.- Toma el suegundo byte y el antepone 8 0's al principio
+                //2.- Hace un OR con el primer byte, al cual automaticamente se le llenan 8 0's al final
+                short muestra = (short)(buffer[i + 1] << 8 | buffer [i]);
+                float muestra32bits = (float)muestra / 32768.0f;
+                acumulador += Math.Abs(muestra32bits);
+            }
+            float promedio = acumulador / (bytesGrabados / 2.0f);
+            sldMicrofono.Value = (double)promedio;
+        }
+
+        private void btnDetener_Click(object sender, RoutedEventArgs e)
+        {
+            waveIn.StopRecording();
         }
     }
 }
