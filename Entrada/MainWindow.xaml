@@ -5,23 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Entrada"
         mc:Ignorable="d"
-        Title="MainWindow" Height="154.945" Width="800">
-    <Grid>
+        Title="MainWindow" Height="522.065" Width="800">
+    <Grid Margin="0,0,-0.4,0.4">
         <TextBlock HorizontalAlignment="Left" Margin="31,28,0,0" TextWrapping="Wrap" Text="Elegir dispositivo:" VerticalAlignment="Top"/>
         <ComboBox x:Name="cmbDispositivos" HorizontalAlignment="Left" Margin="31,49,0,0" VerticalAlignment="Top" Width="678" Height="23"/>
         <Button x:Name="btnIniciar" Content="Iniciar" HorizontalAlignment="Left" Margin="31,77,0,0" VerticalAlignment="Top" Width="75" Click="btnIniciar_Click"/>
         <Button x:Name="btnDetener" Content="Deneter" HorizontalAlignment="Left" Margin="111,77,0,0" VerticalAlignment="Top" Width="75" Click="btnDetener_Click"/>
-        <Slider x:Name="sldMicrofono" HorizontalAlignment="Left" Margin="708,43,-3.4,0" VerticalAlignment="Top" Height="33" Width="89" RenderTransformOrigin="0.5,0.5" Maximum="1" SmallChange="0.01" LargeChange="0.2">
-            <Slider.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="-90"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Slider.RenderTransform>
-        </Slider>
-        <TextBlock x:Name="lblFrecuencia" HorizontalAlignment="Left" Margin="739,108,0,0" TextWrapping="Wrap" Text="0.0" VerticalAlignment="Top"/>
+        <Slider x:Name="sldMicrofono" HorizontalAlignment="Left" Margin="34,138,0,0" VerticalAlignment="Top" Height="33" Width="702" RenderTransformOrigin="0.5,0.5" Maximum="1" SmallChange="0.01" LargeChange="0.2"/>
+        <TextBlock x:Name="lblFrecuencia" HorizontalAlignment="Left" Margin="34,171,0,0" TextWrapping="Wrap" Text="0.0" VerticalAlignment="Top"/>
+        <TextBlock x:Name="lbl500" HorizontalAlignment="Left" Margin="639,96,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
+        <Canvas x:Name="canvas" HorizontalAlignment="Left" Height="118" Margin="12,187,0,0" VerticalAlignment="Top" Width="774">
+            <Image x:Name="imgCarro" Height="50" Canvas.Left="10" Canvas.Top="8" Width="49" Source="car.png"/>
+            <Image x:Name="image" Height="118" Canvas.Left="707" Width="67" Source="meta.png"/>
+        </Canvas>
+        <TextBox x:Name="txtTexto" HorizontalAlignment="Left" Height="137" Margin="12,310,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="772"/>
+        <TextBlock x:Name="lblEO" HorizontalAlignment="Left" Margin="106,471,0,0" TextWrapping="Wrap" Text="EO!" VerticalAlignment="Top" Visibility="Hidden"/>
 
     </Grid>
 </Window>

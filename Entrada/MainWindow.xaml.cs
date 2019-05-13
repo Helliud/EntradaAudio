@@ -15,6 +15,8 @@ using System.Windows.Shapes;
 using NAudio.Wave;
 using NAudio.Wave.SampleProviders;
 using NAudio.Dsp;
+using System.Windows.Threading;
+using System.Diagnostics;
 
 namespace Entrada
 {
@@ -24,14 +26,61 @@ namespace Entrada
     public partial class MainWindow : Window
     {
         WaveIn waveIn;
-
+        DispatcherTimer timer;
+        float frecuenciaFundamental = 0.0f;
+        Stopwatch cronometro;
+        string letraAnterior = "";
+        string letraActual = "";
 
         public MainWindow()
         {
             InitializeComponent();
+            timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromMilliseconds(100);
+            timer.Tick += Timer_Tick;
+            cronometro = new Stopwatch();
             LlenarComboDispositivos();
         }
-        
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {   //Carro
+            if (frecuenciaFundamental > -1)
+            {
+                var leftCarro = Canvas.GetLeft(imgCarro);
+                Canvas.SetLeft(imgCarro, leftCarro + (frecuenciaFundamental / 500.0) * 1.2);
+            }
+
+            else
+            {
+                Canvas.SetLeft(imgCarro, 0);
+
+            }
+
+            //TextBox
+            if(letraActual != "" && letraActual == letraAnterior)
+            {
+                //Elevar si ya paso un segundo
+                if(cronometro.ElapsedMilliseconds >= 1000)
+                {
+                    txtTexto.AppendText(letraActual);
+                    letraActual = "";
+                    cronometro.Restart();
+                    if(txtTexto.Text.Length >= 2)
+                    {
+                       string texto = txtTexto.Text.Substring(txtTexto.Text.Length - 2, 2);
+                        if(texto == "EO")
+                        {
+                            lblEO.Visibility = Visibility.Visible;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                cronometro.Restart();
+            }
+        }
+
         public void LlenarComboDispositivos()
         {
             for(int i = 0; i < WaveIn.DeviceCount; i++)
@@ -45,6 +94,7 @@ namespace Entrada
 
         private void btnIniciar_Click(object sender, RoutedEventArgs e)
         {
+            timer.Start();
             waveIn = new WaveIn();
             //Formato de audio
             waveIn.WaveFormat = new WaveFormat(44100, 16, 1);
@@ -74,7 +124,7 @@ namespace Entrada
             } while (bitsMaximos < numeroDeMuestras);
 
             NumeroDeMuestrasComplejas = bitsMaximos / 2;
-            exponente--;
+            exponente-=2;
 
             Complex[] senalCompleja = new Complex[NumeroDeMuestrasComplejas];
 
@@ -101,6 +151,51 @@ namespace Entrada
             if(promedio > 0)
             {
                 FastFourierTransform.FFT(true, exponente, senalCompleja);
+
+                float[] valoresAbsolutos = new float[senalCompleja.Length];
+                for(int i=0; i<senalCompleja.Length; i++)
+                {
+                    valoresAbsolutos[i] = (float)Math.Sqrt((senalCompleja[i].X * senalCompleja[i].X) + (senalCompleja[i].Y * senalCompleja[i].Y));
+                }
+
+                int indiceSenalConMasPresencia = valoresAbsolutos.ToList().IndexOf(valoresAbsolutos.Max());
+
+                frecuenciaFundamental = (float)indiceSenalConMasPresencia * waveIn.WaveFormat.SampleRate / (float)valoresAbsolutos.Length;
+                letraAnterior = letraActual;
+
+                if(frecuenciaFundamental >= 500 && frecuenciaFundamental <= 550)
+                {
+                    letraActual = "A";
+                }
+                else if (frecuenciaFundamental >= 600 && frecuenciaFundamental <= 650)
+                {
+                    letraActual = "E";
+
+                }
+                else if (frecuenciaFundamental >= 700 && frecuenciaFundamental <= 750)
+                {
+                    letraActual = "I";
+
+                }
+                else if (frecuenciaFundamental >= 800 && frecuenciaFundamental <= 850)
+                {
+                    letraActual = "O";
+
+                }
+                else if (frecuenciaFundamental >= 900 && frecuenciaFundamental <= 950)
+                {
+                    letraActual = "U";
+                }
+                else
+                {
+                    letraActual = "";
+                }
+
+                lblFrecuencia.Text = frecuenciaFundamental.ToString("F");
+                
+
+                
+
             }
         }
 
