@@ -17,6 +17,7 @@
         <Canvas x:Name="canvas" HorizontalAlignment="Left" Height="118" Margin="12,187,0,0" VerticalAlignment="Top" Width="774">
             <Image x:Name="imgCarro" Height="50" Canvas.Left="10" Canvas.Top="8" Width="49" Source="car.png"/>
             <Image x:Name="image" Height="118" Canvas.Left="707" Width="67" Source="meta.png"/>
+            <Image x:Name="image1" Height="49" Canvas.Top="59" Width="49" Canvas.Left="10" Source="player.png"/>
         </Canvas>
         <TextBox x:Name="txtTexto" HorizontalAlignment="Left" Height="137" Margin="12,310,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="772"/>
         <TextBlock x:Name="lblEO" HorizontalAlignment="Left" Margin="106,471,0,0" TextWrapping="Wrap" Text="EO!" VerticalAlignment="Top" Visibility="Hidden"/>
