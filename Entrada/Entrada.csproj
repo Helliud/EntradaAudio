@@ -107,5 +107,12 @@
   <ItemGroup>
     <Resource Include="player.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Pista.png" />
+    <Resource Include="Semaforo_Amarillo.png" />
+    <Resource Include="Semaforo_Gris.png" />
+    <Resource Include="Semaforo_Rojo.png" />
+    <Resource Include="Semaforo_Verde.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

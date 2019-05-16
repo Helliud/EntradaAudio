@@ -31,6 +31,7 @@ namespace Entrada
         Stopwatch cronometro;
         string letraAnterior = "";
         string letraActual = "";
+        
 
         public MainWindow()
         {
@@ -44,20 +45,37 @@ namespace Entrada
 
         private void Timer_Tick(object sender, EventArgs e)
         {   //Carro
-            if (frecuenciaFundamental > -1)
+            if (cmdFacil.IsSelected)
             {
-                var leftCarro = Canvas.GetLeft(imgCarro);
-                Canvas.SetLeft(imgCarro, leftCarro + (frecuenciaFundamental / 500.0) * 1.2);
+                if (frecuenciaFundamental > -1)
+                {
+                    var leftCarro = Canvas.GetLeft(imgCarro);
+                    Canvas.SetLeft(imgCarro, leftCarro + 3.0f);
+
+                    //Ganar bot
+                    if(Canvas.GetLeft(imgCarro) >= 665.0f)
+                    {
+                        Canvas.SetLeft(imgCarro, 0);
+                    }
+                }
+
+
+
+
             }
 
             else
             {
                 Canvas.SetLeft(imgCarro, 0);
-
             }
 
+
+            
+        
+
+
             //TextBox
-            if(letraActual != "" && letraActual == letraAnterior)
+            if (letraActual != "" && letraActual == letraAnterior)
             {
                 //Elevar si ya paso un segundo
                 if(cronometro.ElapsedMilliseconds >= 1000)
@@ -80,6 +98,8 @@ namespace Entrada
                 cronometro.Restart();
             }
         }
+
+
 
         public void LlenarComboDispositivos()
         {
@@ -202,6 +222,13 @@ namespace Entrada
         private void btnDetener_Click(object sender, RoutedEventArgs e)
         {
             waveIn.StopRecording();
+            timer.Stop();
+            Canvas.SetLeft(imgCarro, 0);
+
         }
+
+
+
+
     }
 }
