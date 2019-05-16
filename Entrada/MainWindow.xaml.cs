@@ -31,7 +31,7 @@ namespace Entrada
         Stopwatch cronometro;
         string letraAnterior = "";
         string letraActual = "";
-        
+        //int num = random.Next();
 
         public MainWindow()
         {
@@ -43,7 +43,8 @@ namespace Entrada
         }
 
         private void Timer_Tick(object sender, EventArgs e)
-        {   //Carro
+        {   
+            //Dificultad fácil
             if (cmdFacil.IsSelected)
             {
                 timer.Interval = TimeSpan.FromMilliseconds(50);
@@ -53,7 +54,7 @@ namespace Entrada
                     Canvas.SetLeft(imgCarro, leftCarro + 10.0f);
 
                     //Ganar bot
-                    if (Canvas.GetLeft(imgCarro) >= 1582.0f)
+                    if (Canvas.GetLeft(imgCarro) >= 1585.0f)
                 {
                     waveIn.StopRecording();
                     timer.Stop();
@@ -67,7 +68,7 @@ namespace Entrada
                     Canvas.SetLeft(imgPlayer, leftPlayer + (frecuenciaFundamental / 500.0) * 1.7f);
 
                     //Ganar Jugador
-                    if (Canvas.GetLeft(imgPlayer) >= 1577.0f)
+                    if (Canvas.GetLeft(imgPlayer) >= 1585.0f)
                     {
                         waveIn.StopRecording();
                         timer.Stop();
@@ -80,39 +81,38 @@ namespace Entrada
             if (cmdMedio.IsSelected)
             {
                 timer.Interval = TimeSpan.FromMilliseconds(100);
+
+                //BOT
                 var leftCarro = Canvas.GetLeft(imgCarro);
-                Canvas.SetLeft(imgCarro, leftCarro + 5.0f);
+                Canvas.SetLeft(imgCarro, leftCarro + 10.0f);
+
                 //Ganar bot
-                if (Canvas.GetLeft(imgCarro) >= 665.0f)
+                if (Canvas.GetLeft(imgCarro) >= 1585.0f)
                 {
-                    Canvas.SetLeft(imgCarro, 0);
+                    waveIn.StopRecording();
+                    timer.Stop();
+
                 }
 
+                //Jugador
                 if (frecuenciaFundamental > 300.0f)
                 {
                     var leftPlayer = Canvas.GetLeft(imgPlayer);
-                    Canvas.SetLeft(imgPlayer, leftPlayer + (frecuenciaFundamental / 500.0) * 1.0f);
+                    Canvas.SetLeft(imgPlayer, leftPlayer + (frecuenciaFundamental / 500.0) * 0.7f);
 
-                    //Ganar bot
-                    if (Canvas.GetLeft(imgPlayer) >= 665.0f)
+                    //Ganar Jugador
+                    if (Canvas.GetLeft(imgPlayer) >= 1585.0f)
                     {
-                        Canvas.SetLeft(imgPlayer, 0);
+                        waveIn.StopRecording();
+                        timer.Stop();
+
                     }
-
                 }
 
-
-                else
-                {
-                    Canvas.SetLeft(imgCarro, 0);
-                }
 
             }
-            
 
-        
-
-
+            /*
             //TextBox
             if (letraActual != "" && letraActual == letraAnterior)
             {
@@ -135,7 +135,7 @@ namespace Entrada
             else
             {
                 cronometro.Restart();
-            }
+            }*/
         }
 
 
