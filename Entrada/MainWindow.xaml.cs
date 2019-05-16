@@ -50,31 +50,29 @@ namespace Entrada
 
                 //BOT
                 var leftCarro = Canvas.GetLeft(imgCarro);
-                    Canvas.SetLeft(imgCarro, leftCarro + 3.0f);
+                    Canvas.SetLeft(imgCarro, leftCarro + 10.0f);
 
                     //Ganar bot
-                    if (Canvas.GetLeft(imgCarro) >= 900.0f)
+                    if (Canvas.GetLeft(imgCarro) >= 1582.0f)
                 {
-                    Canvas.SetLeft(imgCarro, 0);
+                    waveIn.StopRecording();
+                    timer.Stop();
+
                 }
 
-                    //Jugador
-                if (frecuenciaFundamental > 200.0f)
+                //Jugador
+                if (frecuenciaFundamental > 100.0f)
                 {
                     var leftPlayer = Canvas.GetLeft(imgPlayer);
-                    Canvas.SetLeft(imgPlayer, leftPlayer + (frecuenciaFundamental / 500.0) * 0.7f);
+                    Canvas.SetLeft(imgPlayer, leftPlayer + (frecuenciaFundamental / 500.0) * 1.7f);
 
-                    //Ganar bot
-                    if (Canvas.GetLeft(imgPlayer) >= 1900.0f)
+                    //Ganar Jugador
+                    if (Canvas.GetLeft(imgPlayer) >= 1577.0f)
                     {
-                        Canvas.SetLeft(imgPlayer, 0);
+                        waveIn.StopRecording();
+                        timer.Stop();
+
                     }
-
-                    /*if()
-                    {
-                        Canvas.SetLeft(imgPlayer, leftCarro - 10.0f);
-
-                    }*/
                 }
 
             }

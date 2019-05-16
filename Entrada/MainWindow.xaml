@@ -18,22 +18,23 @@
         <Button x:Name="btnDetener" Content="Deneter" HorizontalAlignment="Left" Margin="111,77,0,0" VerticalAlignment="Top" Width="75" Click="btnDetener_Click"/>
         <Slider x:Name="sldMicrofono" HorizontalAlignment="Left" Margin="34,138,0,0" VerticalAlignment="Top" Height="33" Width="160" RenderTransformOrigin="0.5,0.5" Maximum="1" SmallChange="0.01" LargeChange="0.2"/>
         <TextBlock x:Name="lblFrecuencia" HorizontalAlignment="Left" Margin="34,171,0,0" TextWrapping="Wrap" Text="0.0" VerticalAlignment="Top"/>
-        <Canvas x:Name="canvas" HorizontalAlignment="Left" Height="500" Margin="12,187,-34,0" VerticalAlignment="Top" Width="1913" Grid.ColumnSpan="3">
-            <Image x:Name="imgCarro" Height="242" Canvas.Left="10" Canvas.Top="8" Width="280" Source="car.png"/>
+        <Canvas x:Name="canvas" HorizontalAlignment="Left" Height="500" Margin="4,402,-25,0" VerticalAlignment="Top" Width="1912" Grid.ColumnSpan="3">
+            <Image x:Name="imgPista" Height="1174" Canvas.Top="-333" Width="1942" Source="Pista.png" Canvas.Left="-14"/>
+            <Image x:Name="imgCarro" Height="214" Canvas.Left="10" Canvas.Top="31" Width="247" Source="car.png"/>
             <Image x:Name="image" Height="148" Canvas.Left="1830" Width="82" Source="meta.png" Canvas.Top="125"/>
-            <Image x:Name="imgPlayer" Height="250" Canvas.Top="250" Width="280" Source="player.png" Canvas.Left="10"/>
+            <Image x:Name="imgPlayer" Height="222" Canvas.Top="245" Width="248" Source="player.png" Canvas.Left="9"/>
             <Image x:Name="image_Copy" Height="159" Canvas.Left="1830" Width="82" Source="meta.png" Canvas.Top="-9"/>
             <Image x:Name="image_Copy1" Height="158" Canvas.Left="1830" Width="82" Source="meta.png" Canvas.Top="217"/>
             <Image x:Name="image_Copy2" Height="158" Canvas.Left="1830" Width="82" Source="meta.png" Canvas.Top="351"/>
         </Canvas>
-        <TextBox x:Name="txtTexto" HorizontalAlignment="Left" Height="73" Margin="31,735,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="772"/>
+        <TextBox x:Name="txtTexto" HorizontalAlignment="Left" Height="73" Margin="558,28,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="772"/>
         <TextBlock x:Name="lblEO" HorizontalAlignment="Left" Margin="106,471,0,0" TextWrapping="Wrap" Text="EO!" VerticalAlignment="Top" Visibility="Hidden"/>
         <ComboBox x:Name="cmbDificultad" HorizontalAlignment="Left" Margin="271,49,0,0" VerticalAlignment="Top" Width="168" Height="23">
             <ComboBoxItem x:Name="cmdFacil" Content="Fácil" HorizontalAlignment="Left" Width="166" IsSelected="True" />
             <ComboBoxItem x:Name="cmdMedio" Content="Medio" HorizontalAlignment="Left" Width="166"/>
             <ComboBoxItem x:Name="cmdDificl" Content="Dificil" HorizontalAlignment="Left" Width="166"/>
         </ComboBox>
-        <TextBlock HorizontalAlignment="Left" Margin="271,28,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="271,28,0,0" TextWrapping="Wrap" Text="Dificultad" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>
