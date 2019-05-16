@@ -37,7 +37,6 @@ namespace Entrada
         {
             InitializeComponent();
             timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromMilliseconds(100);
             timer.Tick += Timer_Tick;
             cronometro = new Stopwatch();
             LlenarComboDispositivos();
@@ -47,30 +46,72 @@ namespace Entrada
         {   //Carro
             if (cmdFacil.IsSelected)
             {
-                if (frecuenciaFundamental > -1)
-                {
-                    var leftCarro = Canvas.GetLeft(imgCarro);
+                timer.Interval = TimeSpan.FromMilliseconds(50);
+
+                //BOT
+                var leftCarro = Canvas.GetLeft(imgCarro);
                     Canvas.SetLeft(imgCarro, leftCarro + 3.0f);
 
                     //Ganar bot
-                    if(Canvas.GetLeft(imgCarro) >= 665.0f)
+                    if (Canvas.GetLeft(imgCarro) >= 900.0f)
+                {
+                    Canvas.SetLeft(imgCarro, 0);
+                }
+
+                    //Jugador
+                if (frecuenciaFundamental > 200.0f)
+                {
+                    var leftPlayer = Canvas.GetLeft(imgPlayer);
+                    Canvas.SetLeft(imgPlayer, leftPlayer + (frecuenciaFundamental / 500.0) * 0.7f);
+
+                    //Ganar bot
+                    if (Canvas.GetLeft(imgPlayer) >= 1900.0f)
                     {
-                        Canvas.SetLeft(imgCarro, 0);
+                        Canvas.SetLeft(imgPlayer, 0);
                     }
+
+                    /*if()
+                    {
+                        Canvas.SetLeft(imgPlayer, leftCarro - 10.0f);
+
+                    }*/
+                }
+
+            }
+
+            if (cmdMedio.IsSelected)
+            {
+                timer.Interval = TimeSpan.FromMilliseconds(100);
+                var leftCarro = Canvas.GetLeft(imgCarro);
+                Canvas.SetLeft(imgCarro, leftCarro + 5.0f);
+                //Ganar bot
+                if (Canvas.GetLeft(imgCarro) >= 665.0f)
+                {
+                    Canvas.SetLeft(imgCarro, 0);
+                }
+
+                if (frecuenciaFundamental > 300.0f)
+                {
+                    var leftPlayer = Canvas.GetLeft(imgPlayer);
+                    Canvas.SetLeft(imgPlayer, leftPlayer + (frecuenciaFundamental / 500.0) * 1.0f);
+
+                    //Ganar bot
+                    if (Canvas.GetLeft(imgPlayer) >= 665.0f)
+                    {
+                        Canvas.SetLeft(imgPlayer, 0);
+                    }
+
                 }
 
 
-
+                else
+                {
+                    Canvas.SetLeft(imgCarro, 0);
+                }
 
             }
-
-            else
-            {
-                Canvas.SetLeft(imgCarro, 0);
-            }
-
-
             
+
         
 
 
@@ -211,7 +252,7 @@ namespace Entrada
                     letraActual = "";
                 }
 
-                lblFrecuencia.Text = frecuenciaFundamental.ToString("F");
+                lblFrecuencia.Text = frecuenciaFundamental.ToString("f");
                 
 
                 
