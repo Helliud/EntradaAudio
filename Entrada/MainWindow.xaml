@@ -5,36 +5,42 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Entrada"
         mc:Ignorable="d"
-        Title="MainWindow" Height="939.065" Width="2023.266">
+        Title="MainWindow" Height="829.643" Width="1442.406">
     <Grid Margin="0,0,124,0">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1453*"/>
-            <ColumnDefinition Width="110*"/>
-            <ColumnDefinition Width="161*"/>
+            <ColumnDefinition Width="326*"/>
+            <ColumnDefinition Width="242*"/>
+            <ColumnDefinition Width="43*"/>
+            <ColumnDefinition Width="63*"/>
         </Grid.ColumnDefinitions>
         <TextBlock HorizontalAlignment="Left" Margin="31,28,0,0" TextWrapping="Wrap" Text="Elegir dispositivo:" VerticalAlignment="Top"/>
-        <ComboBox x:Name="cmbDispositivos" HorizontalAlignment="Left" Margin="31,49,0,0" VerticalAlignment="Top" Width="151" Height="23"/>
-        <Button x:Name="btnIniciar" Content="Iniciar" HorizontalAlignment="Left" Margin="31,77,0,0" VerticalAlignment="Top" Width="75" Click="btnIniciar_Click"/>
-        <Button x:Name="btnDetener" Content="Deneter" HorizontalAlignment="Left" Margin="111,77,0,0" VerticalAlignment="Top" Width="75" Click="btnDetener_Click"/>
-        <Slider x:Name="sldMicrofono" HorizontalAlignment="Left" Margin="34,138,0,0" VerticalAlignment="Top" Height="33" Width="160" RenderTransformOrigin="0.5,0.5" Maximum="1" SmallChange="0.01" LargeChange="0.2"/>
-        <TextBlock x:Name="lblFrecuencia" HorizontalAlignment="Left" Margin="34,171,0,0" TextWrapping="Wrap" Text="0.0" VerticalAlignment="Top"/>
-        <Canvas x:Name="canvas" HorizontalAlignment="Left" Height="500" Margin="4,402,-25,0" VerticalAlignment="Top" Width="1912" Grid.ColumnSpan="3">
-            <Image x:Name="imgPista" Height="1174" Canvas.Top="-333" Width="1942" Source="Pista.png" Canvas.Left="-14"/>
-            <Image x:Name="imgCarro" Height="214" Canvas.Left="10" Canvas.Top="31" Width="247" Source="car.png"/>
-            <Image x:Name="image" Height="148" Canvas.Left="1830" Width="82" Source="meta.png" Canvas.Top="125"/>
-            <Image x:Name="imgPlayer" Height="222" Canvas.Top="245" Width="248" Source="player.png" Canvas.Left="9"/>
-            <Image x:Name="image_Copy" Height="159" Canvas.Left="1830" Width="82" Source="meta.png" Canvas.Top="-9"/>
-            <Image x:Name="image_Copy1" Height="158" Canvas.Left="1830" Width="82" Source="meta.png" Canvas.Top="217"/>
-            <Image x:Name="image_Copy2" Height="158" Canvas.Left="1830" Width="82" Source="meta.png" Canvas.Top="351"/>
+        <Canvas x:Name="canvas" HorizontalAlignment="Left" Height="500" Margin="0,253,-126,0" VerticalAlignment="Top" Width="1474" Grid.ColumnSpan="4">
+            <Image x:Name="imgPista" Height="1174" Canvas.Top="-435" Width="1437" Source="Pista.png"/>
+            <Image x:Name="image_Copy1" Height="158" Canvas.Left="1392" Width="82" Source="meta.png" Canvas.Top="278"/>
+            <Image x:Name="image_Copy2" Height="158" Canvas.Left="1392" Width="82" Source="meta.png" Canvas.Top="407"/>
+            <Image x:Name="imgCarro" Height="147" Canvas.Top="225" Width="169" Source="car.png" Canvas.Left="10"/>
+            <Image x:Name="imgPlayer" Height="135" Canvas.Top="377" Width="176" Source="player.png" Canvas.Left="10"/>
         </Canvas>
-        <TextBox x:Name="txtTexto" HorizontalAlignment="Left" Height="73" Margin="558,28,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="772"/>
         <TextBlock x:Name="lblEO" HorizontalAlignment="Left" Margin="106,471,0,0" TextWrapping="Wrap" Text="EO!" VerticalAlignment="Top" Visibility="Hidden"/>
-        <ComboBox x:Name="cmbDificultad" HorizontalAlignment="Left" Margin="271,49,0,0" VerticalAlignment="Top" Width="168" Height="23">
+        <ComboBox x:Name="cmbDificultad" HorizontalAlignment="Left" Margin="50.4,52,-12,0" VerticalAlignment="Top" Width="168" Height="23" Grid.ColumnSpan="2" Grid.Column="2">
             <ComboBoxItem x:Name="cmdFacil" Content="Fácil" HorizontalAlignment="Left" Width="166" IsSelected="True" />
             <ComboBoxItem x:Name="cmdMedio" Content="Medio" HorizontalAlignment="Left" Width="166"/>
             <ComboBoxItem x:Name="cmdDificl" Content="Dificil" HorizontalAlignment="Left" Width="166"/>
         </ComboBox>
-        <TextBlock HorizontalAlignment="Left" Margin="271,28,0,0" TextWrapping="Wrap" Text="Dificultad" VerticalAlignment="Top"/>
-
+        <TextBlock HorizontalAlignment="Left" Margin="72.4,28,-1,0" TextWrapping="Wrap" Text="Dificultad" VerticalAlignment="Top" Grid.Column="3"/>
+        <TextBlock x:Name="lblNumRandom" HorizontalAlignment="Left" Margin="362,24,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="60" Width="166" FontFamily="Comic Sans MS" FontSize="36"/>
+        <ComboBox x:Name="cmbDispositivos" HorizontalAlignment="Left" Margin="308.6,28,0,0" VerticalAlignment="Top" Width="151" Height="23" Grid.Column="1"/>
+        <Button x:Name="btnIniciar" Content="Iniciar" HorizontalAlignment="Left" Margin="308.6,56,0,0" VerticalAlignment="Top" Width="75" Click="btnIniciar_Click" Grid.Column="1"/>
+        <Button x:Name="btnDetener" Content="Deneter" HorizontalAlignment="Left" Margin="388.6,56,0,0" VerticalAlignment="Top" Width="75" Click="btnDetener_Click" Grid.Column="1"/>
+        <TextBlock x:Name="lblFrecuencia" HorizontalAlignment="Left" Margin="47,41,0,0" TextWrapping="Wrap" Text="0.0" VerticalAlignment="Top" FontSize="22" Foreground="Red"/>
+        <TextBlock x:Name="lblGanador" HorizontalAlignment="Center" Margin="495,141,120.6,0" TextWrapping="Wrap" VerticalAlignment="Top" FontFamily="Magneto" Height="87" Width="490" FontSize="72" Cursor="None" Grid.ColumnSpan="2" RenderTransformOrigin="0.502,0.816">
+            <TextBlock.Foreground>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="Black" Offset="0"/>
+                    <GradientStop Color="#FFF60000" Offset="1"/>
+                </LinearGradientBrush>
+            </TextBlock.Foreground>
+        </TextBlock>
+        <TextBlock x:Name="lblCorrecto" HorizontalAlignment="Center" Margin="495,141,120.6,0" TextWrapping="Wrap" VerticalAlignment="Top" FontFamily="Magneto" Height="87" Width="490" FontSize="72" Cursor="None" Grid.ColumnSpan="2" RenderTransformOrigin="0.502,0.816" Foreground="#FF18FA00"/>
     </Grid>
 </Window>

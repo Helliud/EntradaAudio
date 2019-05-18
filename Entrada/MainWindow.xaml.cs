@@ -18,6 +18,7 @@ using NAudio.Dsp;
 using System.Windows.Threading;
 using System.Diagnostics;
 
+
 namespace Entrada
 {
     /// <summary>
@@ -27,11 +28,19 @@ namespace Entrada
     {
         WaveIn waveIn;
         DispatcherTimer timer;
-        float frecuenciaFundamental = 0.0f;
+        float frecuenciaFundamental;
         Stopwatch cronometro;
-        string letraAnterior = "";
-        string letraActual = "";
-        //int num = random.Next();
+        string Grave = "Grave";
+        string Agudo = "Agudo";
+        string ganadorPlayer = "GANASTE";
+        string perdedor = "PERDISTE";
+        Random numeroRandom = new Random();
+        int numeroInstruccion;
+        int voz;
+        float velocidadJugador;
+        float velocidadBot;
+        float nivelFrecuencia;
+        int tiempoCambioInstruccion;
 
         public MainWindow()
         {
@@ -40,105 +49,39 @@ namespace Entrada
             timer.Tick += Timer_Tick;
             cronometro = new Stopwatch();
             LlenarComboDispositivos();
+            timer.Interval = TimeSpan.FromMilliseconds(100);
+
         }
 
         private void Timer_Tick(object sender, EventArgs e)
-        {   
-            //Dificultad fácil
-            if (cmdFacil.IsSelected)
+        {
+            avanzarBot();
+
+            if(frecuenciaFundamental < nivelFrecuencia)
             {
-                timer.Interval = TimeSpan.FromMilliseconds(50);
-
-                //BOT
-                var leftCarro = Canvas.GetLeft(imgCarro);
-                    Canvas.SetLeft(imgCarro, leftCarro + 10.0f);
-
-                    //Ganar bot
-                    if (Canvas.GetLeft(imgCarro) >= 1585.0f)
-                {
-                    waveIn.StopRecording();
-                    timer.Stop();
-
-                }
-
-                //Jugador
-                if (frecuenciaFundamental > 100.0f)
-                {
-                    var leftPlayer = Canvas.GetLeft(imgPlayer);
-                    Canvas.SetLeft(imgPlayer, leftPlayer + (frecuenciaFundamental / 500.0) * 1.7f);
-
-                    //Ganar Jugador
-                    if (Canvas.GetLeft(imgPlayer) >= 1585.0f)
-                    {
-                        waveIn.StopRecording();
-                        timer.Stop();
-
-                    }
-                }
-
+                voz = 0;
+            }
+            else if (frecuenciaFundamental > nivelFrecuencia)
+            {
+                voz = 1;
             }
 
-            if (cmdMedio.IsSelected)
+            etiquetas();
+            marcadorCorrecto();
+
+            if (numeroInstruccion == voz && frecuenciaFundamental < 1200 && frecuenciaFundamental > 50)
             {
-                timer.Interval = TimeSpan.FromMilliseconds(100);
-
-                //BOT
-                var leftCarro = Canvas.GetLeft(imgCarro);
-                Canvas.SetLeft(imgCarro, leftCarro + 10.0f);
-
-                //Ganar bot
-                if (Canvas.GetLeft(imgCarro) >= 1585.0f)
-                {
-                    waveIn.StopRecording();
-                    timer.Stop();
-
-                }
-
-                //Jugador
-                if (frecuenciaFundamental > 300.0f)
-                {
-                    var leftPlayer = Canvas.GetLeft(imgPlayer);
-                    Canvas.SetLeft(imgPlayer, leftPlayer + (frecuenciaFundamental / 500.0) * 0.7f);
-
-                    //Ganar Jugador
-                    if (Canvas.GetLeft(imgPlayer) >= 1585.0f)
-                    {
-                        waveIn.StopRecording();
-                        timer.Stop();
-
-                    }
-                }
-
-
+                avanzarJugador();
             }
 
-            /*
-            //TextBox
-            if (letraActual != "" && letraActual == letraAnterior)
-            {
-                //Elevar si ya paso un segundo
-                if(cronometro.ElapsedMilliseconds >= 1000)
-                {
-                    txtTexto.AppendText(letraActual);
-                    letraActual = "";
-                    cronometro.Restart();
-                    if(txtTexto.Text.Length >= 2)
-                    {
-                       string texto = txtTexto.Text.Substring(txtTexto.Text.Length - 2, 2);
-                        if(texto == "EO")
-                        {
-                            lblEO.Visibility = Visibility.Visible;
-                        }
-                    }
-                }
-            }
-            else
+            if (cronometro.ElapsedMilliseconds >= tiempoCambioInstruccion)
             {
                 cronometro.Restart();
-            }*/
+                cambioInstruccion();
+            }
+
+            ganadorJugador();
         }
-
-
 
         public void LlenarComboDispositivos()
         {
@@ -153,6 +96,8 @@ namespace Entrada
 
         private void btnIniciar_Click(object sender, RoutedEventArgs e)
         {
+
+            cronometro.Start();
             timer.Start();
             waveIn = new WaveIn();
             //Formato de audio
@@ -163,6 +108,104 @@ namespace Entrada
             waveIn.DataAvailable += WaveIn_DataAvailable;
 
             waveIn.StartRecording();
+
+            if (cmdFacil.IsSelected)
+            {
+                tiempoCambioInstruccion = 2000;
+                velocidadBot = 0.8f;
+                nivelFrecuencia = 400.0f;
+                velocidadJugador = 20;
+
+            }
+
+            else if (cmdMedio.IsSelected)
+            {
+                velocidadBot = 0.7f;
+                velocidadJugador = 20;
+                nivelFrecuencia = 750.0f;
+                tiempoCambioInstruccion = 1000;
+            }
+
+            else if (cmdDificl.IsSelected)
+            {
+                velocidadBot = 0.7f;
+                velocidadJugador = 15;
+                nivelFrecuencia = 500.0f;
+                tiempoCambioInstruccion = 700;
+            }
+        }
+
+        void marcadorCorrecto()
+        {
+            if (frecuenciaFundamental < 1200)
+            {
+                lblCorrecto.Text = "Correcto";
+                lblCorrecto.Foreground = new SolidColorBrush(Colors.GreenYellow);
+
+            }
+            else if (frecuenciaFundamental > 1200)
+            {
+                lblCorrecto.Text = "Baja tu voz";
+                lblCorrecto.Foreground = new SolidColorBrush(Colors.Red);
+            }
+
+            else if (frecuenciaFundamental < 50)
+            {
+                lblCorrecto.Text = "Sube tu voz";
+                lblCorrecto.Foreground = new SolidColorBrush(Colors.Red);
+
+            }
+        }
+
+        void cambioInstruccion()
+        {
+            numeroInstruccion = numeroRandom.Next(0, 2);
+        }
+
+        void avanzarBot()
+        {
+            var leftCarro = Canvas.GetLeft(imgCarro);
+            Canvas.SetLeft(imgCarro, leftCarro + (10.0f * velocidadBot));
+
+        }
+
+        void avanzarJugador()
+        {
+            var leftPlayer = Canvas.GetLeft(imgPlayer);
+            Canvas.SetLeft(imgPlayer, leftPlayer + (frecuenciaFundamental / 500.0) * velocidadJugador);
+        }
+
+        void ganadorJugador()
+        {
+            //Ganar Jugador
+            if (Canvas.GetLeft(imgPlayer) >= 1300)
+            {
+                waveIn.StopRecording();
+                timer.Stop();
+                lblGanador.Text = ganadorPlayer.ToString();
+                lblCorrecto.Text = "";
+            }
+
+            if (Canvas.GetLeft(imgCarro) >= 1300)
+            {
+                waveIn.StopRecording();
+                timer.Stop();
+                lblGanador.Text = perdedor.ToString();
+                lblCorrecto.Text = "";
+
+            }
+        }
+
+        void etiquetas()
+        {
+            if (numeroInstruccion == 0)
+            {
+                lblNumRandom.Text = Grave.ToString();
+            }
+            else
+            {
+                lblNumRandom.Text = Agudo.ToString();
+            }
         }
 
         private void WaveIn_DataAvailable(object sender, WaveInEventArgs e)
@@ -202,7 +245,6 @@ namespace Entrada
                 }
             }
             float promedio = acumulador / (bytesGrabados / 2.0f);
-            sldMicrofono.Value = (double)promedio;
 
 
             //FastFourierTransform.FFT();
@@ -220,36 +262,6 @@ namespace Entrada
                 int indiceSenalConMasPresencia = valoresAbsolutos.ToList().IndexOf(valoresAbsolutos.Max());
 
                 frecuenciaFundamental = (float)indiceSenalConMasPresencia * waveIn.WaveFormat.SampleRate / (float)valoresAbsolutos.Length;
-                letraAnterior = letraActual;
-
-                if(frecuenciaFundamental >= 500 && frecuenciaFundamental <= 550)
-                {
-                    letraActual = "A";
-                }
-                else if (frecuenciaFundamental >= 600 && frecuenciaFundamental <= 650)
-                {
-                    letraActual = "E";
-
-                }
-                else if (frecuenciaFundamental >= 700 && frecuenciaFundamental <= 750)
-                {
-                    letraActual = "I";
-
-                }
-                else if (frecuenciaFundamental >= 800 && frecuenciaFundamental <= 850)
-                {
-                    letraActual = "O";
-
-                }
-                else if (frecuenciaFundamental >= 900 && frecuenciaFundamental <= 950)
-                {
-                    letraActual = "U";
-                }
-                else
-                {
-                    letraActual = "";
-                }
-
                 lblFrecuencia.Text = frecuenciaFundamental.ToString("f");
                 
 
@@ -265,9 +277,6 @@ namespace Entrada
             Canvas.SetLeft(imgCarro, 0);
 
         }
-
-
-
 
     }
 }
