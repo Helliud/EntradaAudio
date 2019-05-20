@@ -17,7 +17,7 @@ using NAudio.Wave.SampleProviders;
 using NAudio.Dsp;
 using System.Windows.Threading;
 using System.Diagnostics;
-
+using System.Media;
 
 namespace Entrada
 {
@@ -30,6 +30,7 @@ namespace Entrada
         DispatcherTimer timer;
         float frecuenciaFundamental;
         Stopwatch cronometro;
+        Stopwatch cronometroIniciar;
         string Grave = "Grave";
         string Agudo = "Agudo";
         string ganadorPlayer = "GANASTE";
@@ -41,13 +42,16 @@ namespace Entrada
         float velocidadBot;
         float nivelFrecuencia;
         int tiempoCambioInstruccion;
-
+        bool comenzarJuego;
+        SoundPlayer Player;
         public MainWindow()
         {
             InitializeComponent();
             timer = new DispatcherTimer();
             timer.Tick += Timer_Tick;
             cronometro = new Stopwatch();
+            cronometroIniciar = new Stopwatch();
+
             LlenarComboDispositivos();
             timer.Interval = TimeSpan.FromMilliseconds(100);
 
@@ -55,32 +59,85 @@ namespace Entrada
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            avanzarBot();
-
-            if(frecuenciaFundamental < nivelFrecuencia)
+            if(cronometroIniciar.ElapsedMilliseconds < 1000)
             {
-                voz = 0;
+                imgSemaforoCuerpo.Visibility = Visibility.Visible;
+                imgSemaforoRojo.Visibility = Visibility.Visible;
+
             }
-            else if (frecuenciaFundamental > nivelFrecuencia)
+            if (cronometroIniciar.ElapsedMilliseconds >= 1300)
             {
-                voz = 1;
-            }
+                imgSemaforoAmarillo.Visibility = Visibility.Visible;
 
-            etiquetas();
-            marcadorCorrecto();
-
-            if (numeroInstruccion == voz && frecuenciaFundamental < 1200 && frecuenciaFundamental > 50)
-            {
-                avanzarJugador();
             }
 
-            if (cronometro.ElapsedMilliseconds >= tiempoCambioInstruccion)
+            if (cronometroIniciar.ElapsedMilliseconds >= 2300)
             {
-                cronometro.Restart();
-                cambioInstruccion();
+                imgSemaforoVerde.Visibility = Visibility.Visible;
+
             }
 
-            ganadorJugador();
+            if (cronometroIniciar.ElapsedMilliseconds >= 3200)
+            {
+                imgSemaforoVerde.Visibility = Visibility.Visible;
+                imgSemaforoVerde2.Visibility = Visibility.Visible;
+                imgSemaforoVerde3.Visibility = Visibility.Visible;
+            }
+
+            if (cronometroIniciar.ElapsedMilliseconds >= 4000)
+            {
+                imgSemaforoCuerpo.Visibility = Visibility.Hidden;
+                imgSemaforoRojo.Visibility = Visibility.Hidden;
+                imgSemaforoAmarillo.Visibility = Visibility.Hidden;
+                imgSemaforoVerde.Visibility = Visibility.Hidden;
+                imgSemaforoVerde2.Visibility = Visibility.Hidden;
+                imgSemaforoVerde3.Visibility = Visibility.Hidden;
+            }
+
+
+
+
+
+            if (cronometroIniciar.ElapsedMilliseconds > 4500)
+            {
+                btnDetener.IsEnabled = true;
+                avanzarBot();
+
+                if (frecuenciaFundamental < nivelFrecuencia)
+                {
+                    voz = 0;
+                }
+                else if (frecuenciaFundamental > nivelFrecuencia)
+                {
+                    voz = 1;
+                }
+
+                etiquetas();
+                marcadorCorrecto();
+
+                if (numeroInstruccion == voz && frecuenciaFundamental < 1200 && frecuenciaFundamental > 50)
+                {
+                    avanzarJugador();
+                }
+                else if (numeroInstruccion != voz)
+                {
+                    lblCorrecto.Text = "MAL";
+                    lblCorrecto.Foreground = new SolidColorBrush(Colors.Red);
+
+                }
+
+
+                if (cronometro.ElapsedMilliseconds >= tiempoCambioInstruccion)
+                {
+                    cronometro.Restart();
+                    cambioInstruccion();
+                }
+
+                ganadorJugador();
+
+
+            }
+
         }
 
         public void LlenarComboDispositivos()
@@ -94,10 +151,14 @@ namespace Entrada
             
         }
 
+
         private void btnIniciar_Click(object sender, RoutedEventArgs e)
         {
+            Player = new SoundPlayer(@"D:\Users\MSI GL63\Source\Repos\EntradaAudio\Entrada\semaforo.wav");
+            Player.Play();
 
             cronometro.Start();
+            cronometroIniciar.Start();
             timer.Start();
             waveIn = new WaveIn();
             //Formato de audio
@@ -115,23 +176,32 @@ namespace Entrada
                 velocidadBot = 0.8f;
                 nivelFrecuencia = 400.0f;
                 velocidadJugador = 20;
+                lblFecuenciaDificultad.Text = nivelFrecuencia.ToString();
+                lblFecuenciaDificultad2.Text = nivelFrecuencia.ToString();
 
             }
 
             else if (cmdMedio.IsSelected)
             {
                 velocidadBot = 0.7f;
-                velocidadJugador = 20;
-                nivelFrecuencia = 750.0f;
+                velocidadJugador = 13;
+                nivelFrecuencia = 500.0f;
                 tiempoCambioInstruccion = 1000;
+                lblFecuenciaDificultad.Text = nivelFrecuencia.ToString();
+                lblFecuenciaDificultad2.Text = nivelFrecuencia.ToString();
+
             }
 
             else if (cmdDificl.IsSelected)
             {
                 velocidadBot = 0.7f;
-                velocidadJugador = 15;
-                nivelFrecuencia = 500.0f;
+                velocidadJugador = 10;
+                nivelFrecuencia = 650.0f;
                 tiempoCambioInstruccion = 700;
+                lblFecuenciaDificultad.Text = nivelFrecuencia.ToString();
+                lblFecuenciaDificultad2.Text = nivelFrecuencia.ToString();
+
+
             }
         }
 
@@ -155,6 +225,10 @@ namespace Entrada
                 lblCorrecto.Foreground = new SolidColorBrush(Colors.Red);
 
             }
+            
+
+
+
         }
 
         void cambioInstruccion()
@@ -202,6 +276,7 @@ namespace Entrada
             {
                 lblNumRandom.Text = Grave.ToString();
             }
+
             else
             {
                 lblNumRandom.Text = Agudo.ToString();
@@ -270,11 +345,21 @@ namespace Entrada
             }
         }
 
-        private void btnDetener_Click(object sender, RoutedEventArgs e)
+        private void BtnDetener_Click(object sender, RoutedEventArgs e)
         {
             waveIn.StopRecording();
             timer.Stop();
+            cronometro.Reset();
+            cronometroIniciar.Reset();
             Canvas.SetLeft(imgCarro, 0);
+            Canvas.SetLeft(imgPlayer, 0);
+            lblCorrecto.Text = "";
+            lblGanador.Text = "";
+            lblFrecuencia.Text = "";
+            lblNumRandom.Text = "";
+            lblFecuenciaDificultad.Text = "";
+            lblFecuenciaDificultad2.Text = "";
+            btnDetener.IsEnabled = false;
 
         }
 

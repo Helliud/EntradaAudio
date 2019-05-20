@@ -20,6 +20,12 @@
             <Image x:Name="image_Copy2" Height="158" Canvas.Left="1392" Width="82" Source="meta.png" Canvas.Top="407"/>
             <Image x:Name="imgCarro" Height="147" Canvas.Top="225" Width="169" Source="car.png" Canvas.Left="10"/>
             <Image x:Name="imgPlayer" Height="135" Canvas.Top="377" Width="176" Source="player.png" Canvas.Left="10"/>
+            <Image x:Name="imgSemaforoCuerpo" Height="484" Canvas.Left="616" Canvas.Top="-112" Width="202" Source="Semaforo_Gris.png" Visibility="Hidden"/>
+            <Image x:Name="imgSemaforoRojo" Height="100" Canvas.Left="667" Canvas.Top="-73" Width="100" Source="Semaforo_Rojo.png" Visibility="Hidden"/>
+            <Image x:Name="imgSemaforoAmarillo" Height="100" Canvas.Left="667" Canvas.Top="82" Width="100" Source="Semaforo_Amarillo.png" Visibility="Hidden"/>
+            <Image x:Name="imgSemaforoVerde" Height="100" Canvas.Left="667" Canvas.Top="234" Width="100" Source="Semaforo_Verde.png" Visibility="Hidden"/>
+            <Image x:Name="imgSemaforoVerde2" Height="100" Canvas.Left="667" Canvas.Top="82" Width="100" Source="Semaforo_Verde.png" Visibility="Hidden"/>
+            <Image x:Name="imgSemaforoVerde3" Height="100" Canvas.Left="667" Canvas.Top="-73" Width="100" Source="Semaforo_Verde.png" Visibility="Hidden"/>
         </Canvas>
         <TextBlock x:Name="lblEO" HorizontalAlignment="Left" Margin="106,471,0,0" TextWrapping="Wrap" Text="EO!" VerticalAlignment="Top" Visibility="Hidden"/>
         <ComboBox x:Name="cmbDificultad" HorizontalAlignment="Left" Margin="50.4,52,-12,0" VerticalAlignment="Top" Width="168" Height="23" Grid.ColumnSpan="2" Grid.Column="2">
@@ -27,11 +33,10 @@
             <ComboBoxItem x:Name="cmdMedio" Content="Medio" HorizontalAlignment="Left" Width="166"/>
             <ComboBoxItem x:Name="cmdDificl" Content="Dificil" HorizontalAlignment="Left" Width="166"/>
         </ComboBox>
-        <TextBlock HorizontalAlignment="Left" Margin="72.4,28,-1,0" TextWrapping="Wrap" Text="Dificultad" VerticalAlignment="Top" Grid.Column="3"/>
+        <TextBlock HorizontalAlignment="Left" Margin="58,28,-1,0" TextWrapping="Wrap" Text="Dificultad" VerticalAlignment="Top" Grid.Column="3" Width="65"/>
         <TextBlock x:Name="lblNumRandom" HorizontalAlignment="Left" Margin="362,24,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="60" Width="166" FontFamily="Comic Sans MS" FontSize="36"/>
         <ComboBox x:Name="cmbDispositivos" HorizontalAlignment="Left" Margin="308.6,28,0,0" VerticalAlignment="Top" Width="151" Height="23" Grid.Column="1"/>
-        <Button x:Name="btnIniciar" Content="Iniciar" HorizontalAlignment="Left" Margin="308.6,56,0,0" VerticalAlignment="Top" Width="75" Click="btnIniciar_Click" Grid.Column="1"/>
-        <Button x:Name="btnDetener" Content="Deneter" HorizontalAlignment="Left" Margin="388.6,56,0,0" VerticalAlignment="Top" Width="75" Click="btnDetener_Click" Grid.Column="1"/>
+        <Button x:Name="btnIniciar" Content="Iniciar" HorizontalAlignment="Left" Margin="309,56,0,0" VerticalAlignment="Top" Width="151" Click="btnIniciar_Click" Grid.Column="1"/>
         <TextBlock x:Name="lblFrecuencia" HorizontalAlignment="Left" Margin="47,41,0,0" TextWrapping="Wrap" Text="0.0" VerticalAlignment="Top" FontSize="22" Foreground="Red"/>
         <TextBlock x:Name="lblGanador" HorizontalAlignment="Center" Margin="495,141,120.6,0" TextWrapping="Wrap" VerticalAlignment="Top" FontFamily="Magneto" Height="87" Width="490" FontSize="72" Cursor="None" Grid.ColumnSpan="2" RenderTransformOrigin="0.502,0.816">
             <TextBlock.Foreground>
@@ -41,6 +46,9 @@
                 </LinearGradientBrush>
             </TextBlock.Foreground>
         </TextBlock>
-        <TextBlock x:Name="lblCorrecto" HorizontalAlignment="Center" Margin="495,141,120.6,0" TextWrapping="Wrap" VerticalAlignment="Top" FontFamily="Magneto" Height="87" Width="490" FontSize="72" Cursor="None" Grid.ColumnSpan="2" RenderTransformOrigin="0.502,0.816" Foreground="#FF18FA00"/>
+        <TextBlock x:Name="lblCorrecto" HorizontalAlignment="Center" Margin="495,141,120.6,0" TextWrapping="Wrap" VerticalAlignment="Top" FontFamily="Magneto" Height="87" Width="490" FontSize="72" Cursor="None" Grid.ColumnSpan="2" RenderTransformOrigin="0.502,0.816" Foreground="#FF18FA00" TextAlignment="Center"/>
+        <TextBlock x:Name="lblFecuenciaDificultad" HorizontalAlignment="Left" Margin="216,177,0,0" TextWrapping="Wrap" VerticalAlignment="Top" TextAlignment="Center" Foreground="White" Width="22"/>
+        <TextBlock x:Name="lblFecuenciaDificultad2" HorizontalAlignment="Left" Margin="24,171,0,0" TextWrapping="Wrap" VerticalAlignment="Top" TextAlignment="Center" Foreground="White" Grid.Column="3" Width="20"/>
+        <Button x:Name="btnDetener" Content="Deneter" Grid.Column="1" HorizontalAlignment="Left" Margin="309,81,0,0" VerticalAlignment="Top" Width="151" Click="BtnDetener_Click" IsEnabled="False"/>
     </Grid>
 </Window>

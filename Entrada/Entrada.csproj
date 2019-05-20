@@ -114,5 +114,8 @@
     <Resource Include="Semaforo_Rojo.png" />
     <Resource Include="Semaforo_Verde.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="semaforo.wav" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
